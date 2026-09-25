@@ -1,0 +1,3 @@
+"survey-imagery @ git+https://github.com/crieck2010/survey-imagery.git"
+"survey-change @ git+https://github.com/crieck2010/survey-change.git"
+"survey-monitor @ git+https://github.com/crieck2010/survey-monitor.git"

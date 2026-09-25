@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "earthwatch-suite"
+version = "0.1.0"
+description = "EarthWatch: meta-package over the remote-sensing computation engines (satellite site monitoring, change detection, analytics)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "crieck2010" }]
+keywords = ["remote-sensing", "satellite", "monitoring", "sentinel-2", "landsat", "change-detection"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "survey-imagery @ git+https://github.com/crieck2010/survey-imagery.git",
+    "survey-change @ git+https://github.com/crieck2010/survey-change.git",
+    "survey-monitor @ git+https://github.com/crieck2010/survey-monitor.git",
+]
+
+[project.urls]
+Repository = "https://github.com/crieck2010/earthwatch-suite"
+
+[tool.setuptools.packages.find]
+where = ["src"]
