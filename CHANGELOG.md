@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+- All eleven builds are shipped: the `earthwatch` registry (`MODULES`
+  table) marks every engine shipped with its released version
+  (survey-imagery 0.1.1, survey-change 0.1.0, survey-monitor 0.1.0,
+  survey-alerts 0.1.0, survey-license 0.1.0, survey-vegetation 0.1.0,
+  survey-flood 0.1.0, survey-burn 0.1.0, survey-coast 0.1.0,
+  survey-thermal 0.1.0, survey-3d 0.1.0), plus the cartography bridge
+  (survey-qgis 0.2.0) and the canonical site-config schema + demo site
+  pack (survey-sites 0.1.0).
+- `docs/ROADMAP.md` rewritten: all eleven builds marked complete, with
+  the shipped QGIS bridge and site-config schema/demo pack.
+- README registry table and suite diagram updated to the full shipped set.
+- `requirements.txt` pins all shipped engine repos.
+
 ## [0.1.0] - 2026-09-24
 
 ### Added

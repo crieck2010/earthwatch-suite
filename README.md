@@ -18,14 +18,16 @@ small set of documented [cross-suite contracts](docs/CONTRACTS.md).
 | `survey-imagery` | [crieck2010/survey-imagery](https://github.com/crieck2010/survey-imagery) | 0.1.1 | Satellite imagery engine: STAC discovery, cloud masking, spectral indices, per-pass site monitor | ✅ shipped |
 | `survey-change` | [crieck2010/survey-change](https://github.com/crieck2010/survey-change) | 0.1.0 | Change-detection engine: per-pass and per-pixel change statistics over imagery time series | ✅ shipped |
 | `survey-monitor` | [crieck2010/survey-monitor](https://github.com/crieck2010/survey-monitor) | 0.1.0 | Scheduled site-monitoring engine: site configs, threshold alert evaluation, alert events | ✅ shipped |
-| `survey-alerts` | — | — | Alert reports: email + PDF delivery of monitoring events | planned |
-| `survey-license` | — | — | License-key engine for the monitoring product | planned |
-| `survey-vegetation` | — | — | Vegetation/vigor analytics: NDVI/EVI/SAVI time series, anomaly vs historical baseline | planned |
-| `survey-flood` | — | — | Flood/water-extent mapping: NDWI water masks, per-pass flood deltas | planned |
-| `survey-burn` | — | — | Burn-scar/disturbance mapping: NBR/dNBR fire severity | planned |
-| `survey-coast` | — | — | Coastal change: shoreline extraction per pass, transect erosion rates | planned |
-| `survey-thermal` | — | — | Land surface temperature: Landsat thermal → LST, heat-anomaly trends | planned |
-| `survey-3d` | — | — | DSM/DEM differencing: cut/fill volumes from stereo or LiDAR pairs | planned |
+| `survey-alerts` | [crieck2010/survey-alerts](https://github.com/crieck2010/survey-alerts) | 0.1.0 | Alert reports: email + PDF delivery of monitoring events (consumes survey-monitor alerts.jsonl) | ✅ shipped |
+| `survey-license` | [crieck2010/survey-license](https://github.com/crieck2010/survey-license) | 0.1.0 | License-key engine: Ed25519-signed keys, offline verification, plan gating for the monitoring product | ✅ shipped |
+| `survey-vegetation` | [crieck2010/survey-vegetation](https://github.com/crieck2010/survey-vegetation) | 0.1.0 | Vegetation/vigor analytics: NDVI/EVI/SAVI time series, phenology-aware anomaly detection | ✅ shipped |
+| `survey-flood` | [crieck2010/survey-flood](https://github.com/crieck2010/survey-flood) | 0.1.0 | Flood/water-extent mapping: NDWI water masks, per-pass flood deltas vs dry-season baseline | ✅ shipped |
+| `survey-burn` | [crieck2010/survey-burn](https://github.com/crieck2010/survey-burn) | 0.1.0 | Burn-scar/disturbance mapping: NBR/dNBR severity, USGS bands, clearing detection | ✅ shipped |
+| `survey-coast` | [crieck2010/survey-coast](https://github.com/crieck2010/survey-coast) | 0.1.0 | Coastal change: NDWI shoreline extraction per pass, transect erosion rates, storm deltas | ✅ shipped |
+| `survey-thermal` | [crieck2010/survey-thermal](https://github.com/crieck2010/survey-thermal) | 0.1.0 | Land surface temperature: Landsat thermal to LST, urban heat-island maps, heatwave detection | ✅ shipped |
+| `survey-3d` | [crieck2010/survey-3d](https://github.com/crieck2010/survey-3d) | 0.1.0 | DSM/DEM differencing: cut/fill volumetrics, DoD maps, coregistration vs stable reference zones | ✅ shipped |
+| `survey-sites` | [crieck2010/survey-sites](https://github.com/crieck2010/survey-sites) | 0.1.0 | Canonical site-config schema + demo site pack: one `site.yaml` drives monitor, alerts, and all analytics engines | ✅ shipped |
+| `survey-qgis` | [crieck2010/survey-qgis](https://github.com/crieck2010/survey-qgis) | 0.2.0 | Shared cartography bridge (lives in survey-suite): QGIS Processing algorithms for every earthwatch engine | ✅ shipped |
 
 Each engine is pure Python, independently tested, and usable on its own.
 This repo adds the registry (`earthwatch.MODULES`), the
@@ -44,13 +46,16 @@ This repo adds the registry (`earthwatch.MODULES`), the
                                                                     │ alerts.jsonl
                                                                     │ (stable contract)
                                                         ┌───────────┴────────┐
-                                                        │  survey-alerts     │  planned
+                                                        │  survey-alerts     │  ✅ shipped
                                                         │  email + PDF       │
                                                         └────────────────────┘
 
-        vertical analytics engines (planned): vegetation · flood · burn
+        vertical analytics engines (all ✅ shipped): vegetation · flood · burn
         coast · thermal · 3d — all consume imagery/change outputs,
         all emit the same alert-event shape.
+
+Site-config schema + demo pack: `survey-sites` v0.1.0 (canonical `site.yaml`,
+four demo sites, `survey-sites` CLI). QGIS bridge: `survey-qgis` v0.2.0.
 ```
 
 **GeoJSON in, alerts out.** Every engine takes footprints as GeoJSON
