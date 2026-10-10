@@ -24,7 +24,10 @@ from __future__ import annotations
 try:
     from importlib.metadata import PackageNotFoundError, version
 
-    __version__ = version("survey-currents")
+    try:
+        __version__ = version("earthwatch-suite")
+    except PackageNotFoundError:
+        __version__ = version("survey-currents")
 except Exception:  # pragma: no cover - editable/uninstalled checkout
     try:
         __version__ = version("survey_currents")

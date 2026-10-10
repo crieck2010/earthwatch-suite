@@ -79,7 +79,8 @@ def test_pack_demo_scripts_exist_and_executable():
     for pack in list_packs(PACK_ROOT):
         demo = os.path.join(pack.directory, "demo.sh")
         assert os.path.isfile(demo), f"{pack.site_id}: demo.sh missing"
-        assert os.access(demo, os.X_OK), f"{pack.site_id}: demo.sh not executable"
+        if os.name != "nt":
+            assert os.access(demo, os.X_OK), f"{pack.site_id}: demo.sh not executable"
 
 
 def test_load_pack_missing_config(tmp_path):
