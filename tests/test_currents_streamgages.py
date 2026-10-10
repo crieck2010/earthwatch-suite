@@ -335,9 +335,9 @@ def test_gagefield_to_si():
     assert f.unit_label == "ft³/s"  # original untouched
 
 
-def test_gagefield_json_roundtrip():
+def test_gagefield_json_roundtrip(tmp_path):
     f = _field()
-    tmp = "/tmp/_test_gage_roundtrip.json"
+    tmp = str(tmp_path / "_test_gage_roundtrip.json")
     f.to_json(tmp)
     rt = GageField.from_json(tmp)
     assert rt.site_numbers() == f.site_numbers()
@@ -345,7 +345,8 @@ def test_gagefield_json_roundtrip():
     vb = rt.records[1].series["00060"]["values"]
     np.testing.assert_allclose(va, vb, equal_nan=True)  # NaN survives
     assert rt.units == f.units
-    os.remove(tmp)
+    if os.path.exists(tmp):
+        os.remove(tmp)
 
 
 def test_gagefield_bad_dates():

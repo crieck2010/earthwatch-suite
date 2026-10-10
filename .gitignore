@@ -12,4 +12,5 @@ htmlcov/
 *.log
 .DS_Store
 demo_out/
+flood-demo/
 pytest_output.txt

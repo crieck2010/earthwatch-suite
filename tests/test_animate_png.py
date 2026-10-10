@@ -7,11 +7,12 @@ from animate import _png
 
 
 @pytest.mark.parametrize("shape", [(7, 13, 3), (16, 16, 4), (101, 57, 3), (1, 1, 3)])
-def test_roundtrip_shapes(shape):
+def test_roundtrip_shapes(shape, tmp_path):
     rng = np.random.default_rng(42)
     img = rng.integers(0, 256, size=shape, dtype=np.uint8)
-    _png.write_png("/tmp/anim_png_test.png", img)
-    back = _png.read_png("/tmp/anim_png_test.png")
+    p = str(tmp_path / "anim_png_test.png")
+    _png.write_png(p, img)
+    back = _png.read_png(p)
     assert back.shape == img.shape
     assert np.array_equal(back, img)
 
