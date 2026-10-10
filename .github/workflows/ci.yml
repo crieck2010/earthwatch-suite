@@ -42,8 +42,9 @@ jobs:
       - name: Publish Summary
         if: always()
         run: |
-          echo "### Test Results for Python ${{ matrix.python-version }} on ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          tail -n 60 pytest_output.txt >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          if [ -f FAILED ]; then exit 1; fi
+          if [ -f FAILED ]; then
+            grep -E 'FAILED|ERROR' pytest_output.txt | head -n 30 | while IFS= read -r line; do
+              echo "::error title=Pytest Failure::$line"
+            done
+            exit 1
+          fi
