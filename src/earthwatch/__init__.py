@@ -6,7 +6,7 @@ their own public repos; install this package to pull them all in, or
 install each engine standalone — every engine is usable on its own.
 """
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 #: Registry of every engine in the EarthWatch remote-sensing project.
 #: "status" is one of: shipped, planned.

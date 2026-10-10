@@ -1,0 +1,75 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "stand-1",
+        "name": "Stand 1 (burn watch)",
+        "kind": "forest"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.12,
+              44.03
+            ],
+            [
+              -74.08,
+              44.03
+            ],
+            [
+              -74.08,
+              44.06
+            ],
+            [
+              -74.12,
+              44.06
+            ],
+            [
+              -74.12,
+              44.03
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "stand-2",
+        "name": "Stand 2 (control)",
+        "kind": "forest"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.075,
+              44.03
+            ],
+            [
+              -74.045,
+              44.03
+            ],
+            [
+              -74.045,
+              44.06
+            ],
+            [
+              -74.075,
+              44.06
+            ],
+            [
+              -74.075,
+              44.03
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

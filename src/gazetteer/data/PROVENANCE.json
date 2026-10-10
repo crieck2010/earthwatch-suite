@@ -1,0 +1,22 @@
+{
+  "dataset": "Natural Earth 1:10m populated places",
+  "source": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_populated_places.geojson",
+  "pulled_utc": "2026-10-01T00:31:16Z",
+  "license": "Public domain (Natural Earth)",
+  "license_url": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "upstream_features": 7342,
+  "kept_records": 7342,
+  "skipped_records": 0,
+  "columns": [
+    "name",
+    "name_local",
+    "lon",
+    "lat",
+    "pop",
+    "scalerank",
+    "featurecla",
+    "adm0",
+    "adm1"
+  ],
+  "note": "Pulled 2026-10-01; sha256 of the downloaded GeoJSON verified byte-identical to the upstream file."
+}

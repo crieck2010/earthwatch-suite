@@ -1,0 +1,85 @@
+# Green Acre Farm — demo site 2 of 4 (agriculture story).
+#
+# Canonical site config (survey-sites schema v1). Also a valid
+# survey-monitor config (shared fields; extra sections ignored).
+
+site_id: green-acre-farm
+name: Green Acre Farm
+description: >
+  Row-crop farm with three management zones. Field A (corn) develops a
+  stress patch mid-season; Field B is orchard; Field C is pasture and
+  doubles as the rural reference for heat-island analysis.
+crs: EPSG:4326
+
+geometry:
+  type: Polygon
+  coordinates:
+    - [[-77.93, 42.92], [-77.84, 42.92], [-77.84, 42.99],
+       [-77.93, 42.99], [-77.93, 42.92]]
+
+zones:
+  - zone_id: field-a
+    name: Field A (corn)
+    kind: field
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-77.92, 42.93], [-77.88, 42.93], [-77.88, 42.96],
+           [-77.92, 42.96], [-77.92, 42.93]]
+  - zone_id: field-b
+    name: Field B (orchard)
+    kind: orchard
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-77.875, 42.93], [-77.845, 42.93], [-77.845, 42.96],
+           [-77.875, 42.96], [-77.875, 42.93]]
+  - zone_id: field-c
+    name: Field C (pasture, rural reference)
+    kind: pasture
+    notes: Rural reference for survey-thermal UHI intensity.
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-77.92, 42.965], [-77.845, 42.965], [-77.845, 42.985],
+           [-77.92, 42.985], [-77.92, 42.965]]
+
+# --- survey-monitor section (shared contract fields) ---
+indices: [ndvi, evi]
+thresholds:
+  ndvi:
+    direction: down          # stress / senescence
+    persistence: 2
+    warning:  {absolute_delta: 0.10, z_score: 2.0}
+    critical: {absolute_delta: 0.20, z_score: 3.0}
+  evi:
+    direction: down
+    persistence: 2
+    warning:  {absolute_delta: 0.08, z_score: 2.0}
+baseline: {strategy: rolling, window_passes: 5, min_passes: 2}
+collection: sentinel-2-l2a
+api_url: https://planetarycomputer.microsoft.com/api/stac/v1
+max_cloud_cover: 30.0
+metric: mean
+cooldown_passes: 0
+notifiers: []
+
+# --- per-engine parameters ---
+engines:
+  vegetation:
+    indices: [ndvi, evi, savi]
+    anomaly_z: 2.0
+    min_history_years: 1
+  thermal:
+    reference_zone: field-c
+    heatwave_threshold_c: 35.0
+    heatwave_passes: 2
+
+alerts:
+  recipients: ["grower@example.com"]
+  severity_min: warning
+  digest: true
+
+license:
+  plan: site
+  max_sites: 1

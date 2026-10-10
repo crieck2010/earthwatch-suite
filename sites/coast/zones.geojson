@@ -1,0 +1,75 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "marsh",
+        "name": "Tidal marsh (flood watch)",
+        "kind": "wetland"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -72.88,
+              40.6
+            ],
+            [
+              -72.84,
+              40.6
+            ],
+            [
+              -72.84,
+              40.63
+            ],
+            [
+              -72.88,
+              40.63
+            ],
+            [
+              -72.88,
+              40.6
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "beach",
+        "name": "Beach face (erosion watch)",
+        "kind": "custom"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -72.88,
+              40.635
+            ],
+            [
+              -72.84,
+              40.635
+            ],
+            [
+              -72.84,
+              40.65
+            ],
+            [
+              -72.88,
+              40.65
+            ],
+            [
+              -72.88,
+              40.635
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,483 @@
+{
+  "$id": "https://github.com/crieck2010/survey-sites/schema/site-config/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "Canonical site configuration for the earthwatch-suite remote-sensing project. A strict superset of the survey-monitor site config (docs/SITE_CONFIG.md in survey-monitor): every field survey-monitor reads keeps identical semantics, and survey-monitor ignores the additional sections it does not know. Schema version 1.0.0.",
+  "properties": {
+    "alerts": {
+      "additionalProperties": true,
+      "description": "Delivery routing for survey-alerts.",
+      "properties": {
+        "digest": {
+          "default": true,
+          "type": "boolean"
+        },
+        "recipients": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "severity_min": {
+          "default": "warning",
+          "enum": [
+            "info",
+            "warning",
+            "critical"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "api_url": {
+      "type": "string"
+    },
+    "baseline": {
+      "additionalProperties": true,
+      "properties": {
+        "min_passes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "reference_pass": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "strategy": {
+          "default": "rolling",
+          "enum": [
+            "rolling",
+            "fixed"
+          ],
+          "type": "string"
+        },
+        "window_passes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "collection": {
+      "default": "sentinel-2-l2a",
+      "type": "string"
+    },
+    "cooldown_passes": {
+      "default": 0,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "crs": {
+      "default": "EPSG:4326",
+      "description": "Coordinate reference system of geometry/zones/transects. WGS84 lon/lat unless stated.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Free-text site story: what this site is and why it is watched.",
+      "type": "string"
+    },
+    "engines": {
+      "additionalProperties": true,
+      "description": "Per-analytics-engine parameter overrides. Each section is optional.",
+      "properties": {
+        "burn": {
+          "additionalProperties": true,
+          "properties": {
+            "min_area_ha": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "severity_bands": {
+              "enum": [
+                "usgs",
+                "custom"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "coast": {
+          "additionalProperties": true,
+          "properties": {
+            "index": {
+              "enum": [
+                "ndwi",
+                "mndwi"
+              ],
+              "type": "string"
+            },
+            "transect_ids": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "dem3d": {
+          "additionalProperties": true,
+          "properties": {
+            "dem_rmse_m": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "noise_floor_m": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "stable_zone": {
+              "description": "zone_id of stable ground for the coregistration check",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "flood": {
+          "additionalProperties": true,
+          "properties": {
+            "baseline_months": {
+              "items": {
+                "maximum": 12,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "index": {
+              "enum": [
+                "ndwi",
+                "mndwi"
+              ],
+              "type": "string"
+            },
+            "min_area_ha": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "threshold": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "thermal": {
+          "additionalProperties": true,
+          "properties": {
+            "heatwave_passes": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "heatwave_threshold_c": {
+              "type": "number"
+            },
+            "reference_zone": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "vegetation": {
+          "additionalProperties": true,
+          "properties": {
+            "anomaly_z": {
+              "type": "number"
+            },
+            "indices": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "min_history_years": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "geometry": {
+      "description": "Site footprint: a GeoJSON Polygon/MultiPolygon or a bbox object.",
+      "oneOf": [
+        {
+          "additionalProperties": true,
+          "properties": {
+            "coordinates": {
+              "type": "array"
+            },
+            "type": {
+              "enum": [
+                "Polygon",
+                "MultiPolygon"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "coordinates"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": true,
+          "properties": {
+            "bbox": {
+              "description": "[min_lon, min_lat, max_lon, max_lat]",
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 4,
+              "minItems": 4,
+              "type": "array"
+            }
+          },
+          "required": [
+            "bbox"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "indices": {
+      "items": {
+        "description": "Spectral indices survey-monitor watches. Mirrors survey-imagery's registry.",
+        "enum": [
+          "ndvi",
+          "evi",
+          "savi",
+          "ndwi",
+          "ndmi",
+          "ndbi",
+          "nbr",
+          "bsi"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "license": {
+      "additionalProperties": true,
+      "description": "License gating reference for survey-license.",
+      "properties": {
+        "key_id": {
+          "description": "Key fingerprint (kid:...), never the full key.",
+          "type": "string"
+        },
+        "max_sites": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "plan": {
+          "enum": [
+            "trial",
+            "site",
+            "unlimited"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "max_cloud_cover": {
+      "default": 30.0,
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    },
+    "metric": {
+      "default": "mean",
+      "type": "string"
+    },
+    "name": {
+      "description": "Human-readable site label.",
+      "minLength": 1,
+      "type": "string"
+    },
+    "notifiers": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "site_id": {
+      "description": "Stable id; doubles as config filename and per-site state directory. Lowercase letters, digits, - and _.",
+      "pattern": "^[a-z0-9][a-z0-9\\-_]{0,63}$",
+      "type": "string"
+    },
+    "thresholds": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "properties": {
+          "critical": {
+            "additionalProperties": true,
+            "properties": {
+              "absolute_delta": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "z_score": {
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          },
+          "direction": {
+            "default": "either",
+            "enum": [
+              "up",
+              "down",
+              "either"
+            ],
+            "type": "string"
+          },
+          "persistence": {
+            "default": 1,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "warning": {
+            "additionalProperties": true,
+            "properties": {
+              "absolute_delta": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "z_score": {
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "description": "Per-index alert thresholds. Every index in 'indices' needs an entry.",
+      "type": "object"
+    },
+    "transects": {
+      "description": "Shoreline transects for survey-coast: drawn landward -> seaward, perpendicular to shore.",
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "geometry": {
+            "additionalProperties": true,
+            "properties": {
+              "coordinates": {
+                "minItems": 2,
+                "type": "array"
+              },
+              "type": {
+                "enum": [
+                  "LineString"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "coordinates"
+            ],
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "transect_id": {
+            "pattern": "^[a-z0-9][a-z0-9\\-_]{0,63}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "transect_id",
+          "geometry"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "zones": {
+      "description": "Named sub-areas: fields, pits, stands, water bodies. Consumed by the analytics engines.",
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "geometry": {
+            "additionalProperties": true,
+            "properties": {
+              "coordinates": {
+                "type": "array"
+              },
+              "type": {
+                "enum": [
+                  "Polygon",
+                  "MultiPolygon"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "coordinates"
+            ],
+            "type": "object"
+          },
+          "kind": {
+            "description": "Zone role. 'reference' marks stable ground (coregistration, UHI rural reference).",
+            "enum": [
+              "pit",
+              "stockpile",
+              "field",
+              "orchard",
+              "pasture",
+              "forest",
+              "burn",
+              "water",
+              "wetland",
+              "urban",
+              "reference",
+              "custom"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "zone_id": {
+            "pattern": "^[a-z0-9][a-z0-9\\-_]{0,63}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "zone_id",
+          "geometry"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "site_id",
+    "name",
+    "geometry",
+    "indices",
+    "thresholds"
+  ],
+  "title": "survey-sites site config",
+  "type": "object",
+  "version": "1.0.0"
+}

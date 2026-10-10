@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "pit-north",
+        "name": "North pit (active cut)",
+        "kind": "pit"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.68,
+              43.08
+            ],
+            [
+              -77.64,
+              43.08
+            ],
+            [
+              -77.64,
+              43.11
+            ],
+            [
+              -77.68,
+              43.11
+            ],
+            [
+              -77.68,
+              43.08
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "stockpile-south",
+        "name": "South stockpile (fill)",
+        "kind": "stockpile"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.68,
+              43.05
+            ],
+            [
+              -77.64,
+              43.05
+            ],
+            [
+              -77.64,
+              43.075
+            ],
+            [
+              -77.68,
+              43.075
+            ],
+            [
+              -77.68,
+              43.05
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "stable-road",
+        "name": "Haul road (stable reference)",
+        "kind": "reference"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.635,
+              43.08
+            ],
+            [
+              -77.625,
+              43.08
+            ],
+            [
+              -77.625,
+              43.11
+            ],
+            [
+              -77.635,
+              43.11
+            ],
+            [
+              -77.635,
+              43.08
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

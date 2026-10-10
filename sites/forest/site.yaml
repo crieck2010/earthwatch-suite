@@ -1,0 +1,70 @@
+# Pine Ridge Forest — demo site 4 of 4 (forestry / disturbance story).
+#
+# Canonical site config (survey-sites schema v1). Also a valid
+# survey-monitor config (shared fields; extra sections ignored).
+
+site_id: pine-ridge-forest
+name: Pine Ridge Forest
+description: >
+  Managed forest. Stand 1 is the burn/disturbance watch area; Stand 2 is
+  an untouched control stand for comparison.
+crs: EPSG:4326
+
+geometry:
+  type: Polygon
+  coordinates:
+    - [[-74.13, 44.02], [-74.04, 44.02], [-74.04, 44.07],
+       [-74.13, 44.07], [-74.13, 44.02]]
+
+zones:
+  - zone_id: stand-1
+    name: Stand 1 (burn watch)
+    kind: forest
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-74.12, 44.03], [-74.08, 44.03], [-74.08, 44.06],
+           [-74.12, 44.06], [-74.12, 44.03]]
+  - zone_id: stand-2
+    name: Stand 2 (control)
+    kind: forest
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-74.075, 44.03], [-74.045, 44.03], [-74.045, 44.06],
+           [-74.075, 44.06], [-74.075, 44.03]]
+
+# --- survey-monitor section (shared contract fields) ---
+indices: [nbr, ndvi]
+thresholds:
+  nbr:
+    direction: down          # burn / clearing
+    persistence: 2
+    warning:  {absolute_delta: 0.08, z_score: 2.0}
+    critical: {absolute_delta: 0.15, z_score: 3.0}
+  ndvi:
+    direction: down
+    persistence: 2
+    warning:  {absolute_delta: 0.10, z_score: 2.0}
+baseline: {strategy: rolling, window_passes: 5, min_passes: 2}
+collection: sentinel-2-l2a
+api_url: https://planetarycomputer.microsoft.com/api/stac/v1
+max_cloud_cover: 30.0
+metric: mean
+cooldown_passes: 0
+notifiers: []
+
+# --- per-engine parameters ---
+engines:
+  burn:
+    severity_bands: usgs
+    min_area_ha: 0.5
+
+alerts:
+  recipients: ["forester@example.com"]
+  severity_min: warning
+  digest: true
+
+license:
+  plan: site
+  max_sites: 1

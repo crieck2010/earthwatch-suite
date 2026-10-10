@@ -4,26 +4,66 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "earthwatch-suite"
-version = "0.1.0"
-description = "EarthWatch: meta-package over the remote-sensing computation engines (satellite site monitoring, change detection, analytics)"
+version = "1.0.0"
+description = "EarthWatch: consolidated remote-sensing and vertical map reel monorepo (satellite site monitoring, change detection, flow fields, and automated video reels)"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [{ name = "crieck2010" }]
-keywords = ["remote-sensing", "satellite", "monitoring", "sentinel-2", "landsat", "change-detection"]
+authors = [{ name = "Charles Rieck", email = "crieck2010@users.noreply.github.com" }]
+keywords = ["remote-sensing", "satellite", "sentinel-2", "landsat", "reels", "noaa-ofs", "particles", "climatology"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: GIS",
 ]
 dependencies = [
-    "survey-imagery @ git+https://github.com/crieck2010/survey-imagery.git",
-    "survey-change @ git+https://github.com/crieck2010/survey-change.git",
-    "survey-monitor @ git+https://github.com/crieck2010/survey-monitor.git",
+    "numpy>=1.22",
+    "scipy>=1.8",
+    "pillow>=9.0",
+    "matplotlib>=3.5",
+    "pyyaml>=6.0",
+    "requests>=2.28",
 ]
 
+[project.optional-dependencies]
+gis = ["rasterio>=1.3"]
+studio = ["streamlit>=1.30"]
+test = ["pytest", "streamlit>=1.30"]
+
+[project.scripts]
+reels = "reels.cli:main"
+survey-3d = "elev3d.cli:main"
+survey-alerts = "alerts.cli:main"
+survey-animate = "animate.cli:main"
+survey-burn = "burn.cli:main"
+survey-change = "change.cli:main"
+survey-coast = "coast.cli:main"
+survey-currents = "currents.cli:main"
+survey-flood = "flood.cli:main"
+survey-flow = "flow.cli:main"
+survey-imagery = "imagery.cli:main"
+survey-license = "licensekit.cli:main"
+survey-monitor = "monitor.cli:main"
+survey-sites = "sites.cli:main"
+survey-thermal = "thermal.cli:main"
+survey-timescales = "timescales.cli:main"
+survey-trends = "trends.cli:main"
+survey-vegetation = "vegetation.cli:main"
+viz = "viz.cli:main"
+
 [project.urls]
+Homepage = "https://github.com/crieck2010/earthwatch-suite"
 Repository = "https://github.com/crieck2010/earthwatch-suite"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+gazetteer = ["data/*"]
+timescales = ["data/*"]
+viz = ["data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--import-mode=importlib"

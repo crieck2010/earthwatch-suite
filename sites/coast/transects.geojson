@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "transect_id": "shore-a",
+        "name": "Transect A (west, eroding)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.87,
+            40.655
+          ],
+          [
+            -72.87,
+            40.615
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "transect_id": "shore-b",
+        "name": "Transect B (east, accreting)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.85,
+            40.655
+          ],
+          [
+            -72.85,
+            40.615
+          ]
+        ]
+      }
+    }
+  ]
+}

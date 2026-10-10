@@ -1,0 +1,88 @@
+# Black Rock Quarry — demo site 1 of 4 (construction / mining story).
+#
+# Canonical site config (survey-sites schema v1). This file is ALSO a valid
+# survey-monitor config: survey-monitor reads the shared fields and ignores
+# the zones/engines/alerts/license sections it does not know.
+
+site_id: black-rock-quarry
+name: Black Rock Quarry
+description: >
+  Active limestone quarry. The north pit is being cut deeper while the
+  south stockpile grows. A paved haul road crosses the site and never
+  moves — it is the stable reference for DEM coregistration checks.
+crs: EPSG:4326
+
+geometry:
+  type: Polygon
+  coordinates:
+    - [[-77.70, 43.04], [-77.60, 43.04], [-77.60, 43.12],
+       [-77.70, 43.12], [-77.70, 43.04]]
+
+zones:
+  - zone_id: pit-north
+    name: North pit (active cut)
+    kind: pit
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-77.68, 43.08], [-77.64, 43.08], [-77.64, 43.11],
+           [-77.68, 43.11], [-77.68, 43.08]]
+  - zone_id: stockpile-south
+    name: South stockpile (fill)
+    kind: stockpile
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-77.68, 43.05], [-77.64, 43.05], [-77.64, 43.075],
+           [-77.68, 43.075], [-77.68, 43.05]]
+  - zone_id: stable-road
+    name: Haul road (stable reference)
+    kind: reference
+    notes: Paved surface; used by survey-3d coreg to detect DEM bias.
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-77.635, 43.08], [-77.625, 43.08], [-77.625, 43.11],
+           [-77.635, 43.11], [-77.635, 43.08]]
+
+# --- survey-monitor section (shared contract fields) ---
+indices: [ndvi, ndwi, nbr]
+thresholds:
+  ndvi:
+    direction: down          # clearing / stripping vegetation
+    persistence: 2
+    warning:  {absolute_delta: 0.10, z_score: 2.0}
+    critical: {absolute_delta: 0.20, z_score: 3.0}
+  ndwi:
+    direction: either        # pit dewatering / ponding
+    persistence: 2
+    warning:  {absolute_delta: 0.10, z_score: 2.0}
+  nbr:
+    direction: down          # fresh disturbance
+    persistence: 2
+    warning:  {absolute_delta: 0.08, z_score: 2.0}
+baseline: {strategy: rolling, window_passes: 5, min_passes: 2}
+collection: sentinel-2-l2a
+api_url: https://planetarycomputer.microsoft.com/api/stac/v1
+max_cloud_cover: 30.0
+metric: mean
+cooldown_passes: 0
+notifiers: []
+
+# --- per-engine parameters ---
+engines:
+  dem3d:
+    noise_floor_m: 0.15
+    dem_rmse_m: 0.10
+    stable_zone: stable-road
+
+# --- delivery routing (survey-alerts) ---
+alerts:
+  recipients: ["ops@example.com"]
+  severity_min: warning
+  digest: true
+
+# --- license gating (survey-license) ---
+license:
+  plan: site
+  max_sites: 1

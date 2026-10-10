@@ -1,0 +1,88 @@
+# Harbor Cove — demo site 3 of 4 (coastal story).
+#
+# Canonical site config (survey-sites schema v1). Also a valid
+# survey-monitor config (shared fields; extra sections ignored).
+
+site_id: harbor-cove
+name: Harbor Cove
+description: >
+  Coastal site with an eroding west beach, an accreting east beach, and a
+  tidal marsh that floods seasonally. Two shoreline transects run
+  landward -> seaward, perpendicular to the beach.
+crs: EPSG:4326
+
+geometry:
+  type: Polygon
+  coordinates:
+    - [[-72.90, 40.60], [-72.82, 40.60], [-72.82, 40.66],
+       [-72.90, 40.66], [-72.90, 40.60]]
+
+zones:
+  - zone_id: marsh
+    name: Tidal marsh (flood watch)
+    kind: wetland
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-72.88, 40.60], [-72.84, 40.60], [-72.84, 40.63],
+           [-72.88, 40.63], [-72.88, 40.60]]
+  - zone_id: beach
+    name: Beach face (erosion watch)
+    kind: custom
+    geometry:
+      type: Polygon
+      coordinates:
+        - [[-72.88, 40.635], [-72.84, 40.635], [-72.84, 40.65],
+           [-72.88, 40.65], [-72.88, 40.635]]
+
+transects:
+  - transect_id: shore-a
+    name: Transect A (west, eroding)
+    geometry:
+      type: LineString
+      coordinates: [[-72.87, 40.655], [-72.87, 40.615]]
+  - transect_id: shore-b
+    name: Transect B (east, accreting)
+    geometry:
+      type: LineString
+      coordinates: [[-72.85, 40.655], [-72.85, 40.615]]
+
+# --- survey-monitor section (shared contract fields) ---
+indices: [ndwi, ndvi]
+thresholds:
+  ndwi:
+    direction: either        # water appearing or disappearing
+    persistence: 2
+    warning:  {absolute_delta: 0.10, z_score: 2.0}
+    critical: {absolute_delta: 0.20, z_score: 3.0}
+  ndvi:
+    direction: down          # marsh die-off
+    persistence: 2
+    warning:  {absolute_delta: 0.10, z_score: 2.0}
+baseline: {strategy: rolling, window_passes: 5, min_passes: 2}
+collection: sentinel-2-l2a
+api_url: https://planetarycomputer.microsoft.com/api/stac/v1
+max_cloud_cover: 30.0
+metric: mean
+cooldown_passes: 0
+notifiers: []
+
+# --- per-engine parameters ---
+engines:
+  coast:
+    index: ndwi
+    transect_ids: [shore-a, shore-b]
+  flood:
+    index: ndwi
+    threshold: 0.0
+    min_area_ha: 1.0
+    baseline_months: [6, 7, 8]
+
+alerts:
+  recipients: ["harbormaster@example.com"]
+  severity_min: warning
+  digest: true
+
+license:
+  plan: site
+  max_sites: 1

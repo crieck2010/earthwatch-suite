@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "field-a",
+        "name": "Field A (corn)",
+        "kind": "field"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.92,
+              42.93
+            ],
+            [
+              -77.88,
+              42.93
+            ],
+            [
+              -77.88,
+              42.96
+            ],
+            [
+              -77.92,
+              42.96
+            ],
+            [
+              -77.92,
+              42.93
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "field-b",
+        "name": "Field B (orchard)",
+        "kind": "orchard"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.875,
+              42.93
+            ],
+            [
+              -77.845,
+              42.93
+            ],
+            [
+              -77.845,
+              42.96
+            ],
+            [
+              -77.875,
+              42.96
+            ],
+            [
+              -77.875,
+              42.93
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "field-c",
+        "name": "Field C (pasture, rural reference)",
+        "kind": "pasture"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.92,
+              42.965
+            ],
+            [
+              -77.845,
+              42.965
+            ],
+            [
+              -77.845,
+              42.985
+            ],
+            [
+              -77.92,
+              42.985
+            ],
+            [
+              -77.92,
+              42.965
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
