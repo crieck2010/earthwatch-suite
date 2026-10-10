@@ -22,7 +22,7 @@ survey-sites validate "$SITE_DIR/site.yaml"
 
 echo "== [2/3] shoreline change (survey-coast, synthetic) =="
 survey-coast demo --out-dir "$OUT/coast" > "$OUT/coast.log" 2>&1
-grep -qF "recovered=-2.43±0.73" "$OUT/coast.log" \
+grep -qE "recovered=-2\.43.*0\.73" "$OUT/coast.log" \
   || { echo "FAIL: expected erosion rate"; cat "$OUT/coast.log"; exit 1; }
 grep -qF "displacement=-10.0 m" "$OUT/coast.log" \
   || { echo "FAIL: expected storm displacement"; exit 1; }

@@ -21,8 +21,10 @@ ENGINE_CLIS = [
 ]
 
 engines_present = all(shutil.which(cli) for cli in ENGINE_CLIS)
+is_posix = os.name != "nt" and shutil.which("bash") is not None
 needs_engines = pytest.mark.skipif(
-    not engines_present, reason="engine CLIs not installed"
+    not (engines_present and is_posix),
+    reason="engine CLIs and bash required (POSIX only)",
 )
 
 

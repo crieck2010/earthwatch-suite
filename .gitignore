@@ -11,3 +11,5 @@ venv/
 htmlcov/
 *.log
 .DS_Store
+demo_out/
+pytest_output.txt

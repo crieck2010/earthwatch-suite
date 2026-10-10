@@ -43,7 +43,7 @@ jobs:
         if: always()
         run: |
           if [ -f FAILED ]; then
-            grep -E 'FAILED|ERROR' pytest_output.txt | head -n 30 | while IFS= read -r line; do
+            grep -a -E 'FAILED|ERROR' pytest_output.txt | head -n 30 | while IFS= read -r line; do
               echo "::error title=Pytest Failure::$line"
             done
             exit 1
