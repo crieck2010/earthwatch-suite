@@ -10,6 +10,9 @@ jobs:
   test:
     name: Python ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -31,5 +34,16 @@ jobs:
           pip install -e .
 
       - name: Run tests
+        id: test_run
         run: |
-          pytest -v -q
+          pytest -q --tb=short > pytest_output.txt 2>&1 || touch FAILED
+          cat pytest_output.txt
+
+      - name: Publish Summary
+        if: always()
+        run: |
+          echo "### Test Results for Python ${{ matrix.python-version }} on ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -n 60 pytest_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          if [ -f FAILED ]; then exit 1; fi
