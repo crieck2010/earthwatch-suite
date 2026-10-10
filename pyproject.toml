@@ -28,7 +28,8 @@ dependencies = [
 [project.optional-dependencies]
 gis = ["rasterio>=1.3"]
 studio = ["streamlit>=1.30"]
-test = ["pytest", "streamlit>=1.30"]
+currents = ["netCDF4>=1.6"]
+test = ["pytest", "streamlit>=1.30", "netCDF4>=1.6"]
 
 [project.scripts]
 reels = "reels.cli:main"
