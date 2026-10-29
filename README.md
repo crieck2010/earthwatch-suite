@@ -5,6 +5,8 @@
 ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
+![North American winds reel output](docs/assets/earthwatch-suite-winds.gif)
+
 **EarthWatch-Suite** is the unified monorepo consolidating 28 specialized geospatial remote-sensing, hydrodynamic particle flow, and vertical map reel engines. It transforms free satellite imagery (Sentinel-2, Landsat via STAC) and operational hydrodynamic/climatological data (NOAA OFS, Copernicus Marine, GLSEA) into actionable monitoring intelligence and automated, high-impact vertical video reels.
 
 The terrestrial surveying counterpart (COGO, level networks, least-squares 3D adjustments, geodesy, and point clouds) lives in the flagship companion project **[crieck2010/survey-suite](https://github.com/crieck2010/survey-suite)**.
